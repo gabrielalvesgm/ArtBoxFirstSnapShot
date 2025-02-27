@@ -1,12 +1,13 @@
 //Cliente class
 package ArtBoxSnapShot.ArtboxSnapshot.model;
 
-
+//imports
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.processing.Pattern;
+
 
 //Cliente entity mapped on the "clientes" table in database.
 @Entity
@@ -17,7 +18,7 @@ import org.hibernate.annotations.processing.Pattern;
 })
 
 
-
+//Cliente class
 public class Cliente {
 
 
