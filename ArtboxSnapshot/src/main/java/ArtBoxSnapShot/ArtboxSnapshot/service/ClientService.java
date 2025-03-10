@@ -1,4 +1,4 @@
 package ArtBoxSnapShot.ArtboxSnapshot.service;
 
-public class ClienteService {
+public class ClientService {
 }
