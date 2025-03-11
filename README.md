@@ -1,7 +1,7 @@
 Repositório dedicado para o desenvolvimento da primeira snapshot do projeto artbox, projeto que visa o desenvolvimento de uma ApiRestful utilizando Springboot, Hibernate, e MySQL
 o desenvolvimento desta snapshot será principalmente para inicializar os testes unitários e polir as funcionalidades do software.
 
-Tecnologias Utilizadas
+Tecnologias Utilizadas:
 Backend
 Java 21
 Spring Boot (Web Starter, JPA, Spring Security, DevTools)
