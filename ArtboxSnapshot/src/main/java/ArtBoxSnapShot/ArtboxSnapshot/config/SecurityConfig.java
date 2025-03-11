@@ -1,4 +1,3 @@
-//SecurityConfig.java
 package ArtBoxSnapShot.ArtboxSnapshot.config;
 
 import org.springframework.context.annotation.Bean;
@@ -15,11 +14,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Desativa o CSRF se não for utilizado (importante para APIs REST)
+                // Desativa o CSRF, o que é recomendado para APIs REST que não utilizam sessões
                 .csrf(csrf -> csrf.disable())
-                // Configura o acesso a todos os endpoints sem autenticação
+                // Permite acesso a todas as requisições sem exigir autenticação
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                // Aplica configurações padrão (opcional)
+                // Configura o HTTP Basic de forma padrão (opcional, pode ser removido se não for necessário)
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
