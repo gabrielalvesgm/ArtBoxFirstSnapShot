@@ -27,5 +27,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
      *
      * @return an Optional containing the found Client or empty if not found.
      */
-    Optional<Client> findByEmail(String email);
+    //Optional<Client> findByEmail(String email);
 }

@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("clients")
-public class ClienteController {
+public class ClientController {
 
     private final ClientService clientService;
 
-    public ClienteController(ClientService clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
