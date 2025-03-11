@@ -1,3 +1,4 @@
+//SecurityConfig.java
 package ArtBoxSnapShot.ArtboxSnapshot.config;
 
 import org.springframework.context.annotation.Bean;
