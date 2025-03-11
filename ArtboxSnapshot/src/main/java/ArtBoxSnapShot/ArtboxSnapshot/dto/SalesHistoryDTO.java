@@ -13,6 +13,7 @@ public class SalesHistoryDTO {
     private String description;
     private BigDecimal price;
     private LocalDateTime date;
+    private String cpfCnpj;
 
     //Getter and Setters
 
@@ -54,5 +55,13 @@ public class SalesHistoryDTO {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 }
