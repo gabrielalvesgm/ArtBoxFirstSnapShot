@@ -10,7 +10,8 @@ public class ClientDTO {
     private String cpfCnpj;
     private String name;
     private String email;
-    private String adress;
+    private String address;
+    private String phone_number;
 
     //Getter and Setters
 
@@ -46,11 +47,19 @@ public class ClientDTO {
         this.email = email;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 }

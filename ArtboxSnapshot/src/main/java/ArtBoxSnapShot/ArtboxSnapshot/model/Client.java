@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Pattern;
 @Table(name = "clients", uniqueConstraints = {
         @UniqueConstraint(columnNames = "cpfCnpj"),    // Ensures the CPF/CNPJ column is unique
         @UniqueConstraint(columnNames = "email"),       // Ensures the email column is unique
-        @UniqueConstraint(columnNames = "phoneNumber")  // Ensures the phoneNumber column is unique (Note: field not declared in this class)
+        @UniqueConstraint(columnNames = "phone_number")  // Ensures the phoneNumber column is unique (Note: field not declared in this class)
 })
 public class Client {
 
@@ -28,18 +28,23 @@ public class Client {
     private String cpfCnpj;
 
     // Client name must not be blank
-    @NotBlank(message = "Client name cannot be empty")
+    @NotBlank(message = "O nome não pode estar vazio")
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     // Email must be valid and unique
-    @Email(message = "Email must be valid")
+    @Email(message = "Email deve ser válido")
     @Column(name = "email", unique = true, length = 100)
     private String email;
 
     // Address column (optional)
     @Column(name = "address", length = 255)
     private String address;
+
+    // Phone Number (optional)
+    @NotBlank(message = "Número de telefone deve ser válido")
+    @Column(name = "phone_number", length = 16)
+    private String phone_number;
 
     // Getters and Setters
 
@@ -81,5 +86,13 @@ public class Client {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 }
