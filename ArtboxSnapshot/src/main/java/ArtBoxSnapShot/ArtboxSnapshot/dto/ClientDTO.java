@@ -13,7 +13,17 @@ public class ClientDTO {
     private String address;
     private String phone_number;
 
-    //Getter and Setters
+    //Necessary constructor for mapping of Client to ClientDTO in service
+    public ClientDTO(Long id, String cpfCnpj, String name, String email, String address, String phone_number) {
+        this.id = id;
+        this.cpfCnpj = cpfCnpj;
+        this.name = name;
+        this.email = email;
+        this.address = address;
+        this.phone_number = phone_number;
+    }
+
+//Getter and Setters
 
     public Long getId() {
         return id;
