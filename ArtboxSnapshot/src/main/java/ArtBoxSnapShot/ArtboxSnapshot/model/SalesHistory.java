@@ -18,7 +18,7 @@ public class SalesHistory {
     private Long id;
 
     // Many-to-One relationship with Client. Each sale must be associated with a valid client.
-    @NotNull(message = "Client cannot be null")
+    @NotNull(message = "Este cliente não existe.")
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
@@ -29,12 +29,12 @@ public class SalesHistory {
     private String description;
 
     // Price of the sale; must not be null
-    @NotNull(message = "Price cannot be null")
+    @NotNull(message = "O preço não pode ser nulo")
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     // Date and time when the sale occurred; must not be null
-    @NotNull(message = "Date cannot be null")
+    @NotNull(message = "Forneça uma data")
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
