@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Client entity mapped to the "clients" table in the database.
  */
@@ -45,6 +48,11 @@ public class Client {
     @NotBlank(message = "Número de telefone deve ser válido")
     @Column(name = "phone_number", length = 16)
     private String phone_number;
+
+
+    //
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SalesHistory> sales = new ArrayList<>();
 
     // Getters and Setters
 
@@ -94,5 +102,13 @@ public class Client {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
+    }
+
+    public List<SalesHistory> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<SalesHistory> sales) {
+        this.sales = sales;
     }
 }

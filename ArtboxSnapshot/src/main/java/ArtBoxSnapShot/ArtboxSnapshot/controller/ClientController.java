@@ -27,15 +27,7 @@ public class ClientController {
         Client client = clientService.createClient(clientDTO);
         return ResponseEntity.ok(client);
     }
-    //To do implement Delete Client, Update Client, findById
-
-    //To do remove this
-    //Endpoint to get a client by his CPF
-    @GetMapping("/cpfCnpj/{cpfCnpj}")
-    public ResponseEntity<Client> getClientByCpfCnpj(@PathVariable String cpfCnpj) {
-        Optional<Client> client = clientService.getClientByCpfCnpj(cpfCnpj);
-        return client.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    //...To do implement Delete Client, Update Client, findById
 
     //Endpoint to get a page of filtered clients
     @GetMapping("/findClients")

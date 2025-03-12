@@ -2,8 +2,11 @@
 package ArtBoxSnapShot.ArtboxSnapshot.repository;
 
 
+import ArtBoxSnapShot.ArtboxSnapshot.model.Client;
 import ArtBoxSnapShot.ArtboxSnapshot.model.SalesHistory;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,11 +15,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SalesHistoryRepository extends JpaRepository<SalesHistory, Long> {
 
-    /**
-     *  Retrieve a list of sales history records associated with a specific client.
-     *
-     * @param clientId the Id of the Client.
-     * @return a list of SalesHistory records linked to the given client.
-     */
     List<SalesHistory> findByClientId(Long clientId);
+
+
+    //Get sale by id (that belongs to the provided client)
+    Optional<SalesHistory> findByIdAndClient_id(Long saleId, Long clientId);
+
+
+    //Delete a sale associated to a specific client
+    void deleteByClient(Client client);
+
+
+    long CountByClient(Client client);
 }

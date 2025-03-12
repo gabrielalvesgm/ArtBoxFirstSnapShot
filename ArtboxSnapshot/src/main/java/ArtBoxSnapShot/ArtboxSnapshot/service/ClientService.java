@@ -50,7 +50,7 @@ public class ClientService {
     public Page<ClientDTO> findClients(String cpfCnpj,
                                        String name,
                                        String email,
-                                       String adress,
+                                       String address,
                                        String phone_number,
                                        int page, int size, String sortBy, String direction){
 
@@ -59,14 +59,24 @@ public class ClientService {
         //Storing values of pagination config
         Pageable pageable = PageRequest.of(page, size, sort);
         //Storing the Clients filtered by findClients in a page
-        Page<Client> clients = clientRepository.findClients(cpfCnpj, name, email, adress, phone_number, pageable);
+        Page<Client> clients = clientRepository.findClients(cpfCnpj, name, email, address, phone_number, pageable);
         //Returning stored clients to be converted
         return clients.map(this::mapToDTO);
     }
 
-
-    //Get client by his CPF/CNPJ method
-    public Optional<Client> getClientByCpfCnpj(String cpfCnpj) {
-        return clientRepository.findByCpfCnpj(cpfCnpj);
+    //Method to delete all sales of a client by provided CPF/CNPJ
+    public String deleteAllSalesByClientCpfCnpj(String cpfCnpj) {
+        Optional<Client> clientOpt = clientRepository.findByCpfCnpj(cpfCnpj);
+        if (clientOpt.isEmpty()) {
+            return "Client não encontrado";
+        }
+        Client client = clientOpt.get();
+        if (client.getSales().isEmpty()) {
+            return "Este cliente não possui nenhuma venda";
+        }
+        client.getSales().clear();
+        clientRepository.save(client);
+        return "Todas as vendas deste cliente foram deletadas com sucesso.";
     }
+
 }
