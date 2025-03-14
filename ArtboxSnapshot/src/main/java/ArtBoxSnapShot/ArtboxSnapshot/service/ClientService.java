@@ -5,6 +5,7 @@ package ArtBoxSnapShot.ArtboxSnapshot.service;
 import ArtBoxSnapShot.ArtboxSnapshot.dto.ClientDTO;
 import ArtBoxSnapShot.ArtboxSnapshot.model.Client;
 import ArtBoxSnapShot.ArtboxSnapshot.repository.ClientRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,6 +66,7 @@ public class ClientService {
     }
 
     //Method to delete all sales of a client by provided CPF/CNPJ
+    @Transactional
     public String deleteAllSalesByClientCpfCnpj(String cpfCnpj) {
         Optional<Client> clientOpt = clientRepository.findByCpfCnpj(cpfCnpj);
         if (clientOpt.isEmpty()) {

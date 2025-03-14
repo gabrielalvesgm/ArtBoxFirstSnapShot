@@ -26,5 +26,5 @@ public interface SalesHistoryRepository extends JpaRepository<SalesHistory, Long
     void deleteByClient(Client client);
 
 
-    long CountByClient(Client client);
+    long countByClient(Client client);
 }

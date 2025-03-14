@@ -39,7 +39,7 @@ public class ClientController {
                                        @RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size,
                                        @RequestParam(defaultValue = "name") String sortBy,
-                                       @RequestParam(defaultValue = "asac") String direction
+                                       @RequestParam(defaultValue = "asc") String direction
                                        ){
         return clientService.findClients(cpfCnpj, name, email, address, phone_number, page, size, sortBy, direction);
     }
