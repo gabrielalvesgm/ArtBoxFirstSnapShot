@@ -44,6 +44,11 @@ public class ClientController {
         return clientService.findClients(cpfCnpj, name, email, address, phone_number, page, size, sortBy, direction);
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "home";
+    }
+
 
 
 }

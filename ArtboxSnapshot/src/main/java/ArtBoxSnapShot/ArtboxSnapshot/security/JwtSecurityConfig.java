@@ -1,4 +1,4 @@
-package ArtBoxSnapShot.ArtboxSnapshot.config;
+package ArtBoxSnapShot.ArtboxSnapshot.security;
 
 import ArtBoxSnapShot.ArtboxSnapshot.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +19,35 @@ public class JwtSecurityConfig {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    /**
+     * Configures HTTP security for JWT-based authentication.
+     * All endpoints require authentication except /login.
+     * Sessions are set to stateless, as JWT tokens are used.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Disable CSRF protection (adequate for REST APIs)
                 .csrf(csrf -> csrf.disable())
+                // Define endpoint access rules:
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()  // Allow login endpoint without authentication.
-                        .anyRequest().authenticated()             // All other endpoints require authentication.
+                        .requestMatchers("/login").permitAll() // Allow unauthenticated access to the login endpoint
+                        .anyRequest().authenticated()            // All other endpoints require authentication
                 )
+                // Set session management to stateless
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // Add the JWT filter before the UsernamePasswordAuthenticationFilter.
+        // Add the JWT filter to validate tokens with every request before UsernamePasswordAuthenticationFilter runs
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // Expose the AuthenticationManager bean for use in the login endpoint.
+    /**
+     * Exposes the AuthenticationManager bean for use in the authentication process (e.g., in AuthController).
+     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }

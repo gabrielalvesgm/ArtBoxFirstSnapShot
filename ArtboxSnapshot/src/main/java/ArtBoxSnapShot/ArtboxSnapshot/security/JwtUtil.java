@@ -17,7 +17,10 @@ import java.util.Map;
 public class JwtUtil {
 
     // !!!JWT_KEY EXAMPLE FOR DEVELOPMENT PURPOSE!!!
-    private final String SECRET_KEY = "KRABBY_PATTY_SECRET_FORMULA";
+    private final String SECRET_KEY = "SUPER_SECRET_KRABBY_PATTY_SECRET_FORMULA";
+
+    //AUTO-GENERATES AN STRONG SECRET KEY
+    //private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     //Create a key instance from the secret string
     private Key getSigningKey() {
