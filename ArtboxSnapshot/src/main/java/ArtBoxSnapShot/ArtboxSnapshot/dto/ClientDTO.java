@@ -23,6 +23,10 @@ public class ClientDTO {
         this.phone_number = phone_number;
     }
 
+    //DEFAULT BUILDER TO JACKSON (TESTS)
+    public ClientDTO() {}
+
+
 //Getter and Setters
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package ArtBoxSnapShot.ArtboxSnapshot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -17,10 +18,10 @@ public class SalesHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Many-to-One relationship with Client. Each sale must be associated with a valid client.
     @NotNull(message = "Este cliente não existe.")
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
+    @JsonBackReference
     private Client client;
 
     // The description field can store long text (using TEXT column type)

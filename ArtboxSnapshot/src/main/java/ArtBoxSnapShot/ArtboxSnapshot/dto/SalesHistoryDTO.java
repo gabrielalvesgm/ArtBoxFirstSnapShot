@@ -15,6 +15,12 @@ public class SalesHistoryDTO {
     private LocalDateTime date;
     private String cpfCnpj;
 
+
+    //DEFAULT BUILDER FOR JACKSON (TESTS)
+    public SalesHistoryDTO() {}
+
+
+
     //Getter and Setters
 
     public Long getId() {

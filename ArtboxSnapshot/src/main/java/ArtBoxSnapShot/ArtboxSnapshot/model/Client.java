@@ -1,5 +1,6 @@
 package ArtBoxSnapShot.ArtboxSnapshot.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -51,7 +52,9 @@ public class Client {
 
 
     //
+
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<SalesHistory> sales = new ArrayList<>();
 
     // Getters and Setters
@@ -111,4 +114,6 @@ public class Client {
     public void setSales(List<SalesHistory> sales) {
         this.sales = sales;
     }
+
+
 }
