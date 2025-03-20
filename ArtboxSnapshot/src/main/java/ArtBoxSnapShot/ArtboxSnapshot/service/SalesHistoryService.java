@@ -2,6 +2,8 @@ package ArtBoxSnapShot.ArtboxSnapshot.service;
 
 
 import ArtBoxSnapShot.ArtboxSnapshot.dto.SalesHistoryDTO;
+import ArtBoxSnapShot.ArtboxSnapshot.exception.ClientNotFoundException;
+import ArtBoxSnapShot.ArtboxSnapshot.exception.SaleNotFoundException;
 import ArtBoxSnapShot.ArtboxSnapshot.model.Client;
 import ArtBoxSnapShot.ArtboxSnapshot.model.SalesHistory;
 import ArtBoxSnapShot.ArtboxSnapshot.repository.ClientRepository;
@@ -25,7 +27,7 @@ public class SalesHistoryService {
     // Method to create a new sale for an valid client
     public SalesHistory createSale(SalesHistoryDTO salesHistoryDTO) {
         Client client = clientRepository.findByCpfCnpj(salesHistoryDTO.getCpfCnpj())
-                .orElseThrow(() -> new RuntimeException("O Client com este cpf não existe: " + salesHistoryDTO.getCpfCnpj()));
+                .orElseThrow(() -> new ClientNotFoundException("O Client com este CPF não existe: " + salesHistoryDTO.getCpfCnpj()));
 
         SalesHistory sale = new SalesHistory();
         sale.setClient(client);
@@ -44,11 +46,11 @@ public class SalesHistoryService {
     public SalesHistory updateSale(Long saleId, String cpfCnpj, SalesHistoryDTO saleDTO) {
         //Verifying the Client identity by Cpf/Cnpj
         Client client = clientRepository.findByCpfCnpj(cpfCnpj)
-                .orElseThrow(() -> new RuntimeException("Cliente com este CPF/CNPJ não existe:" + cpfCnpj));
+                .orElseThrow(() -> new ClientNotFoundException("Cliente com este CPF/CNPJ não existe:" + cpfCnpj));
 
         //Check that the sale belong to this Client
         SalesHistory sale = salesHistoryRepository.findByIdAndClient_id(saleId, client.getId())
-                .orElseThrow(() -> new RuntimeException("Este cliente não possui uma venda com este id:" + saleId));
+                .orElseThrow(() -> new SaleNotFoundException("Este cliente não possui uma venda com este id:" + saleId));
 
 
         //Update allowed fields
@@ -74,10 +76,10 @@ public class SalesHistoryService {
     @Transactional
     public void deleteSaleByClientIDandSaleID(String cpfCnpj, Long saleId) {
         Client client = clientRepository.findByCpfCnpj(cpfCnpj)
-                .orElseThrow(() -> new RuntimeException("O Cliente com este cpf não existe:" + cpfCnpj));
+                .orElseThrow(() -> new ClientNotFoundException("O Cliente com este cpf não existe:" + cpfCnpj));
 
         SalesHistory sale = salesHistoryRepository.findByIdAndClient_id(saleId, client.getId())
-                .orElseThrow(() -> new RuntimeException("A venda de id: " +saleId + " não pertence a este cliente"));
+                .orElseThrow(() -> new SaleNotFoundException("A venda de id: " +saleId + " não pertence a este cliente"));
 
                 salesHistoryRepository.delete(sale);
     }

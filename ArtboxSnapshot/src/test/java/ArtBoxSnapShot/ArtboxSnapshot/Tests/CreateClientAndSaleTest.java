@@ -10,6 +10,7 @@
  * - This test uses @Transactional so all changes in the database are reverted at the end of the test.
  * - Its expected 200 HTTP status (OK) from all requests.
  * - client and sale responses are printed at the end of the test in the console.
+ *
  */
 
 
@@ -19,6 +20,8 @@ package ArtBoxSnapShot.ArtboxSnapshot.Tests;
 
 
 import ArtBoxSnapShot.ArtboxSnapshot.controller.AuthController;
+import ArtBoxSnapShot.ArtboxSnapshot.dto.AuthRequest;
+import ArtBoxSnapShot.ArtboxSnapshot.dto.AuthResponse;
 import ArtBoxSnapShot.ArtboxSnapshot.dto.ClientDTO;
 import ArtBoxSnapShot.ArtboxSnapshot.dto.SalesHistoryDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,7 +55,7 @@ public class CreateClientAndSaleTest {
     @Test
     public void createClientAndSaleTest() throws Exception {
         //1° STEP: LOGIN TO GET THE JWT TOKEN
-        AuthController.AuthRequest authRequest = new AuthController.AuthRequest();
+        AuthRequest authRequest = new AuthRequest();
         authRequest.setUsername("admin");
         authRequest.setPassword("admin");
 
@@ -62,7 +65,7 @@ public class CreateClientAndSaleTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        AuthController.AuthResponse authResponse = objectMapper.readValue(authResponseContent, AuthController.AuthResponse.class);
+        AuthResponse authResponse = objectMapper.readValue(authResponseContent, AuthResponse.class);
 
         String token = authResponse.getJwt();
 

@@ -1,10 +1,7 @@
-//!!!!!!must be reviewed!!!!!!!!!
-
-
-
-
 package ArtBoxSnapShot.ArtboxSnapshot.controller;
 
+import ArtBoxSnapShot.ArtboxSnapshot.dto.AuthRequest;
+import ArtBoxSnapShot.ArtboxSnapshot.dto.AuthResponse;
 import ArtBoxSnapShot.ArtboxSnapshot.security.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,58 +14,41 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/login") //BASE ENDPOINT FOR AUTH REQUESTS
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
 
+    /**
+     * Constructor-based dependency injection to improve testability and maintainability.
+     */
     @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
+    public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
+    }
 
     @PostMapping
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authRequest, HttpServletResponse response) {
+        //Spring security authentication to the user
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(401).body("Incorrect username or password");
+            //Return HTTP 401 Unauthorized if authentication fails
+            return ResponseEntity.status(401).body("Usuário ou senha incorreto");
         }
+        //Retrieve user details after successful authentication
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+
+        //Generate a JWT token for the authenticated user
         final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+        //Return the generated token in the response
         return ResponseEntity.ok(new AuthResponse(jwt));
-    }
-
-    // DTO for login request
-    public static class AuthRequest {
-        private String username;
-        private String password;
-
-        // Getters and setters
-        public String getUsername() { return username; }
-        public void setUsername(String username) { this.username = username; }
-        public String getPassword() { return password; }
-        public void setPassword(String password) { this.password = password; }
-    }
-
-    // DTO for login response
-    public static class AuthResponse {
-        private String jwt;
-
-        public AuthResponse(String jwt) {
-            this.jwt = jwt;
-        }
-
-        public String getJwt() {
-            return jwt;
-        }
-
-        public void setJwt(String jwt) {
-            this.jwt = jwt;
-        }
     }
 }

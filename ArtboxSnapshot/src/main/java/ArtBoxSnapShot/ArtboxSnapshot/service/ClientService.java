@@ -3,6 +3,7 @@ package ArtBoxSnapShot.ArtboxSnapshot.service;
 
 
 import ArtBoxSnapShot.ArtboxSnapshot.dto.ClientDTO;
+import ArtBoxSnapShot.ArtboxSnapshot.exception.DuplicateResourceException;
 import ArtBoxSnapShot.ArtboxSnapshot.model.Client;
 import ArtBoxSnapShot.ArtboxSnapshot.repository.ClientRepository;
 import jakarta.transaction.Transactional;
@@ -33,9 +34,14 @@ public class ClientService {
                 client.getPhone_number());
     }
 
-
-    //Create a new client method
+    //Create a new client method with a check for duplicate CPF/CNPJ
     public Client createClient(ClientDTO clientDTO) {
+
+        Optional<Client> existingClient = clientRepository.findByCpfCnpj(clientDTO.getCpfCnpj());
+        if (existingClient.isPresent()) {
+            throw new DuplicateResourceException("Cliente com o CPF/CNPJ " + clientDTO.getCpfCnpj() + " já existe.");
+        }
+
         Client client = new Client();
         client.setCpfCnpj(clientDTO.getCpfCnpj());
         client.setName(clientDTO.getName());
