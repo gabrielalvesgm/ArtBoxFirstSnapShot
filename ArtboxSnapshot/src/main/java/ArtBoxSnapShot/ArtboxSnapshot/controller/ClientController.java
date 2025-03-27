@@ -49,6 +49,13 @@ public class ClientController {
         return "home";
     }
 
+    //DeleteClient endpoint
+    @DeleteMapping("/deleteClient/{cpfCnpj}")
+    public ResponseEntity<Void> deleteByCpfCnpj(@PathVariable String cpfCnpj){
+        clientService.deleteAllSalesByClientCpfCnpj(cpfCnpj);
+        clientService.deleteClientByCpfCnpj(cpfCnpj);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

@@ -87,4 +87,16 @@ public class ClientService {
         return "Todas as vendas deste cliente foram deletadas com sucesso.";
     }
 
+    //Delete Client and his sales
+    @Transactional
+    public String deleteClientByCpfCnpj(String cpfCnpj){
+        //Tests if client exists by its cpfCnpj
+        if (!clientRepository.existsByCpfCnpj(cpfCnpj)){
+            return "Cliente não encontrado";
+        }
+        //If a matching client is found its Sales are deleted followed by the client itself deletion
+        clientRepository.deleteByCpfCnpj(cpfCnpj);
+        return "Registro de cliente deletado com sucesso.";
+    }
+
 }

@@ -29,4 +29,7 @@ public class SalesHistoryController {
         salesHistoryService.deleteSaleByClientIDandSaleID(cpfCnpj, saleId);
         return ResponseEntity.noContent().build();
     }
+
+    //Get Sales
+    //Get Sale by saleId
 }

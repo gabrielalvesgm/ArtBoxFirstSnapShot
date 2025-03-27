@@ -3,6 +3,7 @@ package ArtBoxSnapShot.ArtboxSnapshot.repository;
 
 
 import ArtBoxSnapShot.ArtboxSnapshot.model.Client;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,12 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     //To do Remove this
     Optional<Client> findByCpfCnpj(String cpfCnpj);
+
+    //ExistsByCpfCnpj
+    boolean existsByCpfCnpj(String cpfCnpj);
+    //DeleteByCpfCnpj
+    @Transactional
+    String deleteByCpfCnpj(String cpfCnpj);
 
     //Mysql coded query for a getMapping request of a page of clients
     @Query("SELECT c FROM Client c WHERE " +
